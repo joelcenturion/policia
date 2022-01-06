@@ -16,6 +16,8 @@ class _LoadingState extends State<Loading> {
 
     //SI NO HAY ERRORES SE CARGAN LOS DATOS DE LA PERSONA. SI HAY ALGÚN ERROR SE VUELVE A LA
     //PÁGINA PRINCIPAL
+
+
     if (Global.error == false) {
       Global.pages++;
       print('Global.pages: ${Global.pages}');
@@ -54,22 +56,37 @@ class _LoadingState extends State<Loading> {
     return Stack(
       children: [
         Opacity(
-          opacity: 0.5,
+          opacity: 0.3,
           child: AbsorbPointer(child: Home()),
         ),
         Opacity(
-          opacity: 1,
+          opacity: 0.9,
           child: Center(
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.grey,
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(20),
               ),
-              width: 70,
-              height: 70,
-              child: Center(
-                child: CircularProgressIndicator(
-                  strokeWidth: 5,
-                ),
+              width: 220,
+              height: 80,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    ' Verificando  ',
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        decoration: TextDecoration.none,
+                        letterSpacing: 1.5
+                    ),
+                  ),
+                  CircularProgressIndicator(
+                    strokeWidth: 5,
+                    color: Colors.white,
+                  ),
+                  SizedBox(width: 10)
+                ],
               ),
             ),
           ),

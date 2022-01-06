@@ -41,8 +41,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'Autorización',
-            style: GoogleFonts.irishGrover(fontSize: 23, letterSpacing: 2.0),
+            'Control de Circulación',
+            style: TextStyle(fontSize: 23),
           ),
           ClipRRect(
             borderRadius: BorderRadius.circular(100),

@@ -210,8 +210,54 @@ class _CameraState extends State<Camera> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: CircularProgressIndicator()),
+    return Stack(
+      children: [
+        Opacity(
+          opacity: 0.9,
+          child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment(-0.3, -0.3),
+                  end: Alignment.bottomRight,
+                  // colors: <Color>[Color(0xff0072b0), Color(0xFF1f1d1d)],
+                  colors: <Color>[Color(0xff006be6), Color(0xFF21232e)],
+                ),
+              )
+          ),
+        ),
+        Opacity(
+          opacity: 0.9,
+          child: Center(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              width: 220,
+              height: 80,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    ' Verificando  ',
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        decoration: TextDecoration.none,
+                        letterSpacing: 1.5
+                    ),
+                  ),
+                  CircularProgressIndicator(
+                    strokeWidth: 5,
+                    color: Colors.white,
+                  ),
+                  SizedBox(width: 10)
+                ],
+              ),
+            ),
+          ),
+        ),
+      ]
     );
   }
 }
