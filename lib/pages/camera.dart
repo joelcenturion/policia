@@ -26,11 +26,12 @@ class _CameraState extends State<Camera> {
     'image2.jpg': {'image1.jpg': 5}
   };
   Future<void> faceRecognition() async {
+    Global.photoBytes = convert.base64Decode(Global.cameraBase64);
     String username = 'admin';
     String password = '1-bypersoft.';
     String basicAuth = 'Basic ' + convert.base64Encode(convert.utf8.encode('$username:$password'));
     try {
-      String url = 'http://190.104.149.238:8080/';
+      String url = 'http://control.bypar.com.py:8000/';
       http.Response response = await http.post(
         Uri.parse(url),
         headers: <String, String>{
@@ -52,7 +53,6 @@ class _CameraState extends State<Camera> {
         Map dataTemp = convert.jsonDecode(response.body);
         print('dataTemp');
         print(dataTemp);
-
         if (!(dataTemp['image2.jpg']).isEmpty) {
           // if (dataTemp['image2.jpg']['image1.jpg'] != 5) {
           data = dataTemp;
@@ -85,12 +85,14 @@ class _CameraState extends State<Camera> {
       print('Error: $e');
       error = true;
     }
-    Global.photoBytes = convert.base64Decode(Global.cameraBase64);
+
     if (!error) {
       print('Landmark detection starting...........');
       Uint8List landmark_data;
       try {
-        String url = 'http://190.104.149.238:8081/';
+        String url = 'http://control.bypar.com.py:8001/';
+
+
         http.Response response = await http.post(
           Uri.parse(url),
           headers: <String, String>{
@@ -126,8 +128,6 @@ class _CameraState extends State<Camera> {
       } catch (e) {
         print('ERROR LANDMARK');
       }
-    } else {
-      Global.photoBytes = convert.base64Decode(Global.cameraBase64);
     }
   }
 
@@ -178,7 +178,11 @@ class _CameraState extends State<Camera> {
 
       File imageTemporary = File(image.path);
       final image1 = img.decodeImage(File(image.path).readAsBytesSync())!;
-      final thumbnail = img.copyResize(image1, width: 135, height: 180);
+      int width = image1.width;
+      int height = image1.height;
+      double aspRatio = width/height;
+      int newWidth= ((aspRatio)*180).toInt();
+      final thumbnail = img.copyResize(image1, width: newWidth, height: 170);
       imageTemporary.writeAsBytes(img.encodePng(thumbnail));
       setState(() {
         this.image = imageTemporary;

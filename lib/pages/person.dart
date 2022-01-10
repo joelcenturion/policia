@@ -7,6 +7,7 @@ import 'dart:io' show Platform;
 import 'dart:convert';
 import 'package:ministerio/services/person_data.dart';
 import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Person extends StatefulWidget {
   // const ({ Key? key }) : super(key: key);
@@ -167,12 +168,12 @@ class _PersonState extends State<Person> {
     }
     print('titleIsHidden: $titleIsHidden');
 
-    Future.delayed(Duration(seconds: 1), () {
-      if (Global.noFaces) {
-        showAlert('No se encontraron Rostros');
-        Global.noFaces = false;
-      }
-    });
+    // Future.delayed(Duration(seconds: 1), () {
+    //   if (Global.noFaces) {
+    //     showAlert('No se encontraron Rostros');
+    //     Global.noFaces = false;
+    //   }
+    // });
     return WillPopScope(
       onWillPop: () async {
         Global.pages--;
@@ -293,6 +294,16 @@ class _PersonState extends State<Person> {
                     //EN CASO DE QUE NO SE PUEDA CARGAR LA IMAGEN
                     errorBuilder: (BuildContext context, Object exception,
                         StackTrace? stackTrace) {
+                      Fluttertoast.showToast(
+                          msg: "Ocurrió un error cargando la imagen. Inténtelo de nuevo.",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0
+                      );
+                      Navigator.pop(context);
                       return Image.asset(
                         'assets/empty_photo.jpg',
                         fit: BoxFit.fill,

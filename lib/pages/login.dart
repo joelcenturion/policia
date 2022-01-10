@@ -1,154 +1,293 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/gestures.dart';
+// import 'package:devkitflutter/ui/reusable/global_function.dart';
+// import 'package:url_launcher/url_launcher.dart';
+// import 'package:devkitflutter/bloc/authentication/login/login_bloc2.dart';
+// import 'package:devkitflutter/ui/integration/api/property_listview.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
-
+class Signin2Page extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  _Signin2PageState createState() => _Signin2PageState();
 }
 
-class _LoginState extends State<Login> {
+class _Signin2PageState extends State<Signin2Page>
+    with SingleTickerProviderStateMixin {
+  final _formKey = GlobalKey<FormState>();
+  // final _globalFunction = GlobalFunction();
+  TextEditingController _etUsername = TextEditingController();
+  TextEditingController _etPassword = TextEditingController();
+  // late LoginBloc2 _loginBloc;
+
   bool _obscureText = true;
-  void toggleObscureText() {
+  IconData _iconVisible = Icons.visibility_off;
+  IconData _iconPassword = Icons.lock;
+  IconData _iconUser = Icons.perm_identity;
+
+  Color _mainColor = Color(0xff243972);
+  Color _underlineColor = Color(0xFFCCCCCC);
+
+  void _toggleObscureText() {
     setState(() {
       _obscureText = !_obscureText;
+      if (_obscureText == true) {
+        _iconVisible = Icons.visibility_off;
+      } else {
+        _iconVisible = Icons.visibility;
+      }
     });
   }
 
-  Color claroColor = Color(0xffDA291C);
+  @override
+  void initState() {
+    // _loginBloc = BlocProvider.of<LoginBloc2>(context);
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _etUsername.dispose();
+    _etPassword.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: claroColor, // status bar color
-    ));
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Container(
-          padding: EdgeInsets.all(25),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+    double keyboard = MediaQuery.of(context).viewInsets.bottom;
+    return Scaffold(
+      backgroundColor: Color(0xff0072b0),
+        body: Center(
+          child: Stack(
+            alignment: AlignmentDirectional.center,
+            fit: StackFit.expand,
+            children: <Widget>[
+              // set your logo here
               Container(
-                child: Image.asset(
-                  'assets/claro.jpg',
-                  height: 100,
-                  width: 100,
-                  fit: BoxFit.fitWidth,
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(bottom: 15),
-                child: Text(
-                  'INICIAR SESIÓN',
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                ),
-              ),
-              Container(
-                child: Text('Municipalidad de Encarnación',
-                    style: TextStyle(
-                      fontSize: 15,
-                    )),
-              ),
-              Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      alignment: Alignment.topLeft,
-                      margin: EdgeInsets.all(10),
-                      child: Text(
-                        'Email',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ),
-                    TextField(
-                      decoration: InputDecoration(
-                        hintText: 'funcionario@mail.com',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
+                  alignment: Alignment.topCenter,
+                  child: ListView(
+                      physics: NeverScrollableScrollPhysics(),
+                      children: <Widget>[
+                        SizedBox(
+                          height: 30,
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide(
-                            color: claroColor,
+                        AnimatedSize(
+                          curve: Curves.easeInOut,
+                          duration: const Duration(milliseconds: 500),
+                          vsync: this,
+                          child: Card(
+                            margin: EdgeInsets.symmetric(horizontal: 25),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            child: Image.asset(
+                              'assets/policia.png',
+                              height: keyboard == 0 ? 120 : 70,
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.topLeft,
-                      margin: EdgeInsets.all(10),
-                      child: Text(
-                        'Contraseña',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ),
-                    TextField(
-                      enableSuggestions: false,
-                      obscureText: _obscureText,
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                        suffixIcon: InkWell(
-                          onTap: toggleObscureText,
-                          child: Icon(
-                            _obscureText
-                                ? Icons.visibility_outlined
-                                : Icons.visibility_off_outlined,
-                            color: claroColor,
+                        SizedBox(height: 15),
+                        Center(
+                          child: Text(
+                            'Policía Nacional',
+                            style: GoogleFonts.nunito(
+                              fontSize: keyboard == 0 ? 32 : 20,
+                              fontWeight: FontWeight.w900,
+                              color: Colors.grey,
+                              letterSpacing: 2,
+                            ),
                           ),
                         ),
-                        hintText: '6+ caracteres',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide(
-                            color: claroColor,
+                      ])),
+              ListView(
+                physics: NeverScrollableScrollPhysics(),
+                children: <Widget>[
+                  // create form login
+                  Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      elevation: 1,
+                      margin: EdgeInsets.fromLTRB(
+                          32, keyboard == 0 ? 230 : 140, 32, 0),
+                      color: Colors.white,
+                      child: Container(
+                        margin: EdgeInsets.fromLTRB(24, 0, 24, 20),
+                        child: Form(
+                            key: _formKey,
+                            child: Column(
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 30,
+                                ),
+                                Center(
+                                  child: Text(
+                                    'INICIAR SESIÓN',
+                                    style: GoogleFonts.nunito(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w800,
+                                      color: _mainColor,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                TextFormField(
+                                  keyboardType: TextInputType.name,
+                                  controller: _etUsername,
+                                  decoration: InputDecoration(
+                                      prefixIcon: Icon(_iconUser,
+                                          color: Colors.grey[700], size: 20),
+                                      focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.grey[600]!)),
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: _underlineColor),
+                                      ),
+                                      labelText: 'Nombre de usuario',
+                                      labelStyle:
+                                      TextStyle(color: Colors.grey[700])),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Favor ingrese su nombre de usuario';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                TextFormField(
+                                  obscureText: _obscureText,
+                                  controller: _etPassword,
+                                  decoration: InputDecoration(
+                                    focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Colors.grey[600]!)),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide:
+                                      BorderSide(color: _underlineColor),
+                                    ),
+                                    labelText: 'Contraseña',
+                                    labelStyle:
+                                    TextStyle(color: Colors.grey[700]),
+                                    prefixIcon: Icon(_iconPassword,
+                                        color: Colors.grey[700], size: 20),
+                                    suffixIcon: IconButton(
+                                        icon: Icon(_iconVisible,
+                                            color: Colors.grey[700],
+                                            size: 20),
+                                        onPressed: () {
+                                          _toggleObscureText();
+                                        }),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Favor ingrese su contraseña';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 7,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Fluttertoast.showToast(
+                                            msg: '¿Olvido su contraseña?',
+                                            toastLength: Toast.LENGTH_SHORT);
+                                      },
+                                      child: Text(
+                                        '¿Olvido su contraseña?',
+                                        style: TextStyle(fontSize: 13),
+                                        maxLines: 1,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                SizedBox(
+                                  width: double.maxFinite,
+                                  child: ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor: MaterialStateProperty
+                                            .resolveWith<Color>(
+                                              (Set<MaterialState> states) =>
+                                          _mainColor,
+                                        ),
+                                        shape: MaterialStateProperty.all(
+                                            RoundedRectangleBorder(
+                                              borderRadius:
+                                              BorderRadius.circular(10),
+                                            )),
+                                      ),
+                                      onPressed: () {
+
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 15),
+                                        child: Text(
+                                          'INGRESAR',
+                                          style: GoogleFonts.nunito(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                              letterSpacing: 1),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      )),
+                                ),
+                              ],
+                            )),
+                      )),
+                ],
+              ),
+              Container(
+                // padding: EdgeInsets.all(20),
+                // height: MediaQuery.of(context).size.height - 770,
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height - 60),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Expanded(
+                      child: Center(
+                        child: RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'BYPAR S.A.',
+                                style: GoogleFonts.nunito(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
                     ),
                   ],
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 25),
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    child: Text('INGRESAR'),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                      primary: claroColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      )),
-                ),
-              ),
-              Row(
-                children: [
-                  Text('¿Olvidó su contraseña?'),
-                  TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Recuperar',
-                        style: TextStyle(
-                          color: Colors.blue,
-                        ),
-                      ))
-                ],
-              ),
+              )
             ],
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

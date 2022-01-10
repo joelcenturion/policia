@@ -9,14 +9,14 @@ import 'package:ministerio/pages/login.dart';
 
 void main() {
   runApp(MaterialApp(
-    theme: ThemeData(primaryColor: Colors.red),
-    initialRoute: '/home',
+    // theme: ThemeData(primaryColor: Colors.red),
+    initialRoute: '/login',
     routes: {
       '/home': (context) => Home(),
       '/person': (context) => Person(),
       '/loading': (context) => Loading(),
       '/camera': (context) => Camera(),
-      '/login': (context) => Login(),
+      '/login': (context) => Signin2Page(),
       '/scanner': (context) => Scanner()
     },
   ));
@@ -42,7 +42,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         children: [
           Text(
             'Control de Circulación',
-            style: TextStyle(fontSize: 23),
+            style: TextStyle(fontSize: 19),
           ),
           ClipRRect(
             borderRadius: BorderRadius.circular(100),

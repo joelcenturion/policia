@@ -132,6 +132,7 @@ class _HomeState extends State<Home> {
           return AlertDialog(
             title: const Text('Ingrese Nro. de Cédula'),
             content: TextField(
+              keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelStyle: TextStyle(color: Colors.black),
                 labelText: 'Ingrese Cédula',
