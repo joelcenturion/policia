@@ -17,7 +17,6 @@ class _LoadingState extends State<Loading> {
     //SI NO HAY ERRORES SE CARGAN LOS DATOS DE LA PERSONA. SI HAY ALGÚN ERROR SE VUELVE A LA
     //PÁGINA PRINCIPAL
 
-
     if (Global.error == false) {
       Global.pages++;
       print('Global.pages: ${Global.pages}');
@@ -40,8 +39,9 @@ class _LoadingState extends State<Loading> {
       });
     } else {
       //SI HAY ALGÚN ERROR. RETORNA A LA PÁGINA PRINCIPAL;
-      Navigator.pushNamedAndRemoveUntil(
-          context, '/home', (Route<dynamic> route) => false);
+      // Navigator.pushNamedAndRemoveUntil(
+      //     context, '/home', (Route<dynamic> route) => false);
+      Navigator.pop(context);
     }
   }
 

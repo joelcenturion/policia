@@ -92,7 +92,6 @@ class _CameraState extends State<Camera> {
       try {
         String url = 'http://control.bypar.com.py:8001/';
 
-
         http.Response response = await http.post(
           Uri.parse(url),
           headers: <String, String>{
@@ -177,19 +176,19 @@ class _CameraState extends State<Camera> {
       print('displayImage = await image.readAsBytes()');
 
       File imageTemporary = File(image.path);
-      final image1 = img.decodeImage(File(image.path).readAsBytesSync())!;
-      int width = image1.width;
-      int height = image1.height;
-      double aspRatio = width/height;
-      int newWidth= ((aspRatio)*180).toInt();
-      final thumbnail = img.copyResize(image1, width: newWidth, height: 170);
-      imageTemporary.writeAsBytes(img.encodePng(thumbnail));
-      setState(() {
+      // final image1 = img.decodeImage(File(image.path).readAsBytesSync())!;
+      // int width = image1.width;
+      // int height = image1.height;
+      // double aspRatio = width/height;
+      // int newWidth= ((aspRatio)*180).toInt();
+      // final thumbnail = img.copyResize(image1, width: newWidth, height: 170);
+      // imageTemporary.writeAsBytes(img.encodePng(thumbnail));
+      // setState(() {
         this.image = imageTemporary;
         print('this.image = imageTemporary;');
-      });
+      // });
     } on PlatformException catch (e) {
-      print(e);
+      print('Error al cargar imagen: $e');
     }
   }
 

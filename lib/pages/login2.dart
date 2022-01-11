@@ -132,7 +132,9 @@ class _LoginState extends State<Login> {
                 margin: EdgeInsets.only(top: 25),
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/home');
+                  },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     child: Text('INGRESAR'),

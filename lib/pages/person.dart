@@ -22,7 +22,14 @@ class _PersonState extends State<Person> {
       selectedIndex = index;
     });
     if (index == 0) {
-      Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+      // Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+      if(Global.pages > 1){
+        Navigator.pop(context);
+        Navigator.pop(context);
+      }else{
+        Navigator.pop(context);
+      }
+
     } else if (index == 1) {
       Global.pages++;
       print('Global.pages: ${Global.pages}, index1');
@@ -122,11 +129,11 @@ class _PersonState extends State<Person> {
 
   //Obtener datos de la persona desde loading.dart
   Map person = {};
+  getP(){
+    person = ModalRoute.of(context)!.settings.arguments as Map;
+  }
   @override
   Widget build(BuildContext context) {
-    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    //   statusBarColor: Colors.indigo.shade800[700], // status bar color
-    // ));
     person = ModalRoute.of(context)!.settings.arguments as Map;
     //Tamaño para la foto de ci y para la foto de reco facial
     height = person['height'];
@@ -158,7 +165,7 @@ class _PersonState extends State<Person> {
     if (person['dosage'] == '1RA.') {
       _iconDosis = Icons.warning_rounded;
       _iconDosisColor = Colors.orange[600];
-    } else if (person['dosage'] == '2DA.') {
+    } else if (person['dosage'] == '2DA.' || person['dosage'] == '3RA.') {
       _iconDosis = Icons.offline_pin_outlined;
       _iconDosisColor = Colors.green[400];
     } else {
@@ -294,16 +301,6 @@ class _PersonState extends State<Person> {
                     //EN CASO DE QUE NO SE PUEDA CARGAR LA IMAGEN
                     errorBuilder: (BuildContext context, Object exception,
                         StackTrace? stackTrace) {
-                      Fluttertoast.showToast(
-                          msg: "Ocurrió un error cargando la imagen. Inténtelo de nuevo.",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor: Colors.red,
-                          textColor: Colors.white,
-                          fontSize: 16.0
-                      );
-                      Navigator.pop(context);
                       return Image.asset(
                         'assets/empty_photo.jpg',
                         fit: BoxFit.fill,

@@ -83,7 +83,7 @@ class _HomeState extends State<Home> {
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(50, 18, 50, 18),
                         child: Text(
-                          'INGRESAR ',
+                          'INGRESAR CÉDULA ',
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -133,6 +133,8 @@ class _HomeState extends State<Home> {
             title: const Text('Ingrese Nro. de Cédula'),
             content: TextField(
               keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.digitsOnly],
               decoration: InputDecoration(
                 labelStyle: TextStyle(color: Colors.black),
                 labelText: 'Ingrese Cédula',

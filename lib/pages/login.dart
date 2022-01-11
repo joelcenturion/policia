@@ -80,7 +80,7 @@ class _Signin2PageState extends State<Signin2Page>
                           duration: const Duration(milliseconds: 500),
                           vsync: this,
                           child: Card(
-                            margin: EdgeInsets.symmetric(horizontal: 25),
+                            margin: EdgeInsets.symmetric(horizontal: 30),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25),
                             ),
@@ -234,7 +234,7 @@ class _Signin2PageState extends State<Signin2Page>
                                             )),
                                       ),
                                       onPressed: () {
-
+                                        Navigator.pushNamed(context, '/home');
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
