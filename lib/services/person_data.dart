@@ -8,7 +8,7 @@ class PersonData {
   late String name;
   late String first_name;
   late String last_name;
-  late String vaccine_date;
+  String? vaccine_date;
   late String ci;
   late String bornDate;
   late int dosage;
@@ -43,7 +43,7 @@ class PersonData {
         last_name = data['response'][0]['last_name'];
         vaccine_date = data['response'][0]['fecha_aplicacion'];
         Global.descripcion = data['response'][0]['estado_descripcion'];
-        Global.vaccine_date = vaccine_date;
+        Global.vaccine_date = vaccine_date??'';
         Global.first_name = first_name;
         Global.last_name = last_name;
         Global.message = message;

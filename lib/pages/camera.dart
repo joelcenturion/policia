@@ -166,7 +166,7 @@ class _CameraState extends State<Camera> {
   Future pickImage() async {
     try {
       XFile? image = await ImagePicker().pickImage(
-        source: ImageSource.camera,
+        source: ImageSource.gallery,
         maxHeight: 200,
         maxWidth: 200,
         imageQuality: 100
