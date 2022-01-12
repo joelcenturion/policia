@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/gestures.dart';
+import 'package:ministerio/bloc/login_bloc2.dart';
 // import 'package:devkitflutter/ui/reusable/global_function.dart';
 // import 'package:url_launcher/url_launcher.dart';
 // import 'package:devkitflutter/bloc/authentication/login/login_bloc2.dart';
@@ -20,7 +22,7 @@ class _Signin2PageState extends State<Signin2Page>
   // final _globalFunction = GlobalFunction();
   TextEditingController _etUsername = TextEditingController();
   TextEditingController _etPassword = TextEditingController();
-  // late LoginBloc2 _loginBloc;
+  late LoginBloc2 _loginBloc;
 
   bool _obscureText = true;
   IconData _iconVisible = Icons.visibility_off;
@@ -43,7 +45,7 @@ class _Signin2PageState extends State<Signin2Page>
 
   @override
   void initState() {
-    // _loginBloc = BlocProvider.of<LoginBloc2>(context);
+    _loginBloc = BlocProvider.of<LoginBloc2>(context);
 
     super.initState();
   }
@@ -61,7 +63,26 @@ class _Signin2PageState extends State<Signin2Page>
     double keyboard = MediaQuery.of(context).viewInsets.bottom;
     return Scaffold(
       backgroundColor: Color(0xff0072b0),
-        body: Center(
+        body: BlocListener<LoginBloc2, LoginState2>(
+          listener: (context, state){
+            if (state is LoginWaiting){
+              FocusScope.of(context).unfocus();
+              showProgressDialog(context);
+            }
+            if (state is LoginError){
+              Navigator.pop(context);
+              Fluttertoast.showToast(
+                  msg: state.errorMessage,
+                  toastLength: Toast.LENGTH_LONG,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 13);
+            }
+            if (state is LoginSuccess){
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/home');
+            }
+          },
           child: Stack(
             alignment: AlignmentDirectional.center,
             fit: StackFit.expand,
@@ -234,7 +255,10 @@ class _Signin2PageState extends State<Signin2Page>
                                             )),
                                       ),
                                       onPressed: () {
-                                        Navigator.pushNamed(context, '/home');
+                                        _loginBloc.add(Login2(
+                                          username: _etUsername.text,
+                                          password: _etPassword.text,
+                                        ));
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
@@ -271,7 +295,7 @@ class _Signin2PageState extends State<Signin2Page>
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: 'BYPAR S.A.',
+                                text: 'TSV S.R.L.',
                                 style: GoogleFonts.nunito(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
@@ -290,4 +314,19 @@ class _Signin2PageState extends State<Signin2Page>
           ),
         ));
   }
+}
+Future showProgressDialog(BuildContext context) {
+  return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return WillPopScope(
+          onWillPop: () {
+            return Future.value(false);
+          },
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
+      });
 }

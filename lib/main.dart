@@ -70,8 +70,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'Control de Circulación',
-            style: TextStyle(fontSize: 19),
+            'Control - Identificación',
+            style: TextStyle(fontSize: 18),
           ),
           ClipRRect(
             borderRadius: BorderRadius.circular(100),

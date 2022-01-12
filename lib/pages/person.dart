@@ -129,11 +129,7 @@ class _PersonState extends State<Person> {
 
   //Obtener datos de la persona desde loading.dart
   Map person = {};
-  getP(){
-    person = ModalRoute.of(context)!.settings.arguments as Map;
-  }
-  @override
-  Widget build(BuildContext context) {
+  initialize(){
     person = ModalRoute.of(context)!.settings.arguments as Map;
     //Tamaño para la foto de ci y para la foto de reco facial
     height = person['height'];
@@ -181,6 +177,10 @@ class _PersonState extends State<Person> {
     //     Global.noFaces = false;
     //   }
     // });
+  }
+  @override
+  Widget build(BuildContext context) {
+    initialize();
     return WillPopScope(
       onWillPop: () async {
         Global.pages--;
@@ -206,16 +206,6 @@ class _PersonState extends State<Person> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    // Container(
-                    //   // decoration:
-                    //   //     BoxDecoration(border: Border.all(color: Colors.white)),
-                    //   child: Image.asset(
-                    //     'assets/claro.jpg',
-                    //     height: 75,
-                    //     width: 75,
-                    //     fit: BoxFit.fitWidth,
-                    //   ),
-                    // ),
                     Container(
                       margin: EdgeInsets.symmetric(vertical: 10),
                       child: Text(
@@ -519,6 +509,7 @@ class _PersonState extends State<Person> {
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
+          selectedFontSize: 12,
           elevation: 3.0,
           type: BottomNavigationBarType.fixed,
           // iconSize: 20,
@@ -530,14 +521,14 @@ class _PersonState extends State<Person> {
                 Icons.home_outlined,
                 color: Colors.indigo,
               ),
-              label: 'Inicio',
+              label: 'INICIO',
             ),
             BottomNavigationBarItem(
                 icon: Icon(
                   MyIcon.face1,
                   color: Colors.indigo,
                 ),
-                label: 'Verificación'),
+                label: 'VERIFICACION'),
             // BottomNavigationBarItem(
             //   icon: Icon(
             //     Icons.document_scanner_outlined,

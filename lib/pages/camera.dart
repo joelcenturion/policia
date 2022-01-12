@@ -91,7 +91,6 @@ class _CameraState extends State<Camera> {
       Uint8List landmark_data;
       try {
         String url = 'http://control.bypar.com.py:8001/';
-
         http.Response response = await http.post(
           Uri.parse(url),
           headers: <String, String>{
@@ -134,7 +133,7 @@ class _CameraState extends State<Camera> {
     await faceRecognition();
 
     if(!timeout) {
-      if (data['image2.jpg']['image1.jpg'] < 0.900) {
+      if (data['image2.jpg']['image1.jpg'] <= 1) {
         Global.message = 'RECO FACIAL POSITIVO';
       } else {
         Global.message = 'RECO FACIAL NEGATIVO';
@@ -149,7 +148,7 @@ class _CameraState extends State<Camera> {
         'vaccine': Global.vaccine,
         'photoBytes': Global.photoBytes,
         'height': 210.0,
-        'widht': 160.0,
+        'widht': 157.5,
         'first_name': Global.first_name,
         'last_name': Global.last_name,
         'vaccine_date': Global.vaccine_date,
@@ -166,7 +165,12 @@ class _CameraState extends State<Camera> {
 
   Future pickImage() async {
     try {
-      XFile? image = await ImagePicker().pickImage(source: ImageSource.camera);
+      XFile? image = await ImagePicker().pickImage(
+        source: ImageSource.camera,
+        maxHeight: 200,
+        maxWidth: 200,
+        imageQuality: 100
+      );
       if (image == null) {
         Global.pages--;
         Navigator.pop(context);
@@ -176,17 +180,10 @@ class _CameraState extends State<Camera> {
       print('displayImage = await image.readAsBytes()');
 
       File imageTemporary = File(image.path);
-      // final image1 = img.decodeImage(File(image.path).readAsBytesSync())!;
-      // int width = image1.width;
-      // int height = image1.height;
-      // double aspRatio = width/height;
-      // int newWidth= ((aspRatio)*180).toInt();
-      // final thumbnail = img.copyResize(image1, width: newWidth, height: 170);
-      // imageTemporary.writeAsBytes(img.encodePng(thumbnail));
-      // setState(() {
-        this.image = imageTemporary;
-        print('this.image = imageTemporary;');
-      // });
+
+      this.image = imageTemporary;
+      print('this.image = imageTemporary;');
+
     } on PlatformException catch (e) {
       print('Error al cargar imagen: $e');
     }

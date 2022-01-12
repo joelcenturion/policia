@@ -39,7 +39,7 @@ dependencies:
   permission_handler: ^8.3.0
   flutter_mrz_scanner: ^2.0.0
   fluttertoast: ^8.0.8
-  flutter_bloc: ^8.0.1
+  flutter_bloc: ^7.0.0
   dio: ^4.0.4
   # vibration: ^1.7.4-nullsafety.0
   

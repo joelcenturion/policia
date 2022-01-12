@@ -45,7 +45,8 @@ class _HomeState extends State<Home> {
             gradient: LinearGradient(
               begin: Alignment(-0.3, -0.3),
               end: Alignment.bottomRight,
-              colors: <Color>[Color(0xff0072b0), Color(0xFF1f1d1d)],
+              // colors: <Color>[Color(0xff0072b0), Color(0xFF1f1d1d)],
+              colors: <Color>[Color(0xff006be6), Color(0xFF21232e)],
             ),
           ),
           child: Stack(
@@ -104,16 +105,14 @@ class _HomeState extends State<Home> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'BYPAR S.A.  ',
+                      'TSV S.R.L.  ',
                       style: TextStyle(
                         color: Colors.white70
                       ),
                     ),
-                    Image.asset(
-                      'assets/bypar2.png',
-                      width: 20,
-                      height: 20,
-
+                    CircleAvatar(
+                      backgroundImage: AssetImage('assets/tsv.jpeg'),
+                      maxRadius: 13,
                     )
                   ],
                 ),

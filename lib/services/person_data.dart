@@ -24,9 +24,10 @@ class PersonData {
     try {
       url =
           'https://mdi.bypar.com.py/check-data?document_number=$ciValue&api_key=7e9ef835066a907e4264caa94389a8695775bb94a8c66bf459ce423faab15c0f';
+
       http.Response response = await http.get(Uri.parse(url));
+
       //STATUS CODE
-      
       print("STATUS CODE ci: ${response.statusCode} ");
       if (response.statusCode == 200) {
         Map data = convert.jsonDecode(response.body);
