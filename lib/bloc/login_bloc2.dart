@@ -32,9 +32,21 @@ Stream<LoginState2> _login (String username, String password) async*{
 
 Future<LoginModel> _loginTest(String username, String password) async{
   await Future.delayed(Duration(milliseconds: 1500));
-  if((username == 'admin' || username == 'user1' || username == 'user2') && password == 'spi2022'){
-    return LoginModel(nombre: 'admin');
+  print('${users['$username']} == $password');
+  if(users['$username'] == password){
+    return LoginModel(nombre: username);
   }else{
      throw 'Credenciales Incorrectos';
   }
 }
+
+Map users = {
+  '4542171': 'caballero1',
+  '1845309':'olmedo9',
+  '3485879':'ibañez9',
+  '4048222':'ayala2',
+  '3668131':'miltos1',
+  'admin': 'spi2022',
+  'user1': 'spi2022',
+  'user2': 'spi2022'
+};

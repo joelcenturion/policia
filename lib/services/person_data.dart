@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
+import 'package:ministerio/model/document_model.dart';
 
 class PersonData {
   late String message;
@@ -15,18 +16,24 @@ class PersonData {
   late String vaccine;
   late String photoString;
   late final photoBytes;
-  String? ciValue;
+  late String ciValue;
   late String url;
 
-  PersonData({this.ciValue});
+  PersonData({required this.ciValue});
 
   Future<void> getData(BuildContext context) async {
     try {
-      url =
-          'https://mdi.bypar.com.py/check-data?document_number=$ciValue&api_key=7e9ef835066a907e4264caa94389a8695775bb94a8c66bf459ce423faab15c0f';
+      url = 'https://mdi.bypar.com.py/check-data';
+          //'https://mdi.bypar.com.py/check-data?document_number=$ciValue&api_key=7e9ef835066a907e4264caa94389a8695775bb94a8c66bf459ce423faab15c0f';
 
-      http.Response response = await http.get(Uri.parse(url));
-
+      //http.Response response = await http.get(Uri.parse(url));
+      http.Response response = await http.post(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: convert.jsonEncode(Document(document_number: ciValue, user: Global.user).toJson())
+      );
       //STATUS CODE
       print("STATUS CODE ci: ${response.statusCode} ");
       if (response.statusCode == 200) {
@@ -95,7 +102,8 @@ class Global {
   static late String last_name = '';
   static late String vaccine_date = '';
   static late String descripcion = '';
-
+  static late String user;
+  static late String imei = '';
   //Para contar cantidad de páginas apiladas
   static int pages = 0;
   static bool noFaces = false;

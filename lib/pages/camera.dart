@@ -31,7 +31,7 @@ class _CameraState extends State<Camera> {
     String password = '1-bypersoft.';
     String basicAuth = 'Basic ' + convert.base64Encode(convert.utf8.encode('$username:$password'));
     try {
-      String url = 'http://control.bypar.com.py:8000/';
+      String url = 'https://control.bypar.com.py/';
       http.Response response = await http.post(
         Uri.parse(url),
         headers: <String, String>{
@@ -48,7 +48,7 @@ class _CameraState extends State<Camera> {
           return http.Response('Timeout', 408);
         }
       );
-      print('STATUS CODE ${response.statusCode}');
+      print('STATUS CODE reco${response.statusCode}');
       if (response.statusCode == 200) {
         Map dataTemp = convert.jsonDecode(response.body);
         print('dataTemp');
@@ -82,15 +82,26 @@ class _CameraState extends State<Camera> {
       }
     } catch (e) {
       print('ERROR FACE RECOGNITION');
-      print('Error: $e');
+      print('Error: ${e}');
       error = true;
+      Fluttertoast.showToast(
+          msg: "No se pudo conectar al servidor. Verifique su conexión a internet",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+      Navigator.pop(context);
+      timeout = true;
     }
 
     if (!error) {
       print('Landmark detection starting...........');
       Uint8List landmark_data;
       try {
-        String url = 'http://control.bypar.com.py:8001/';
+        String url = 'https://landmark.bypar.com.py/';
         http.Response response = await http.post(
           Uri.parse(url),
           headers: <String, String>{
@@ -133,7 +144,7 @@ class _CameraState extends State<Camera> {
     await faceRecognition();
 
     if(!timeout) {
-      if (data['image2.jpg']['image1.jpg'] <= 1) {
+      if (data['image2.jpg']['image1.jpg'] <= 0.75) {
         Global.message = 'RECO FACIAL POSITIVO';
       } else {
         Global.message = 'RECO FACIAL NEGATIVO';
@@ -156,7 +167,7 @@ class _CameraState extends State<Camera> {
       });
     }else{
       Global.pages--;
-      print('Global.pagesdo: ${Global.pages}');
+      print('Global.pages timeout: ${Global.pages}');
     }
   }
 
@@ -166,9 +177,9 @@ class _CameraState extends State<Camera> {
   Future pickImage() async {
     try {
       XFile? image = await ImagePicker().pickImage(
-        source: ImageSource.gallery,
-        maxHeight: 200,
-        maxWidth: 200,
+        source: ImageSource.camera,
+        maxHeight: 250,
+        maxWidth: 250,
         imageQuality: 100
       );
       if (image == null) {

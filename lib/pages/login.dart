@@ -4,12 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter/gestures.dart';
 import 'package:ministerio/bloc/login_bloc2.dart';
-// import 'package:devkitflutter/ui/reusable/global_function.dart';
-// import 'package:url_launcher/url_launcher.dart';
-// import 'package:devkitflutter/bloc/authentication/login/login_bloc2.dart';
-// import 'package:devkitflutter/ui/integration/api/property_listview.dart';
+import 'package:ministerio/services/person_data.dart';
+
+
 
 class Signin2Page extends StatefulWidget {
   @override
@@ -46,9 +44,13 @@ class _Signin2PageState extends State<Signin2Page>
   @override
   void initState() {
     _loginBloc = BlocProvider.of<LoginBloc2>(context);
-
+    // _getImei();
     super.initState();
   }
+  _getImei() async{
+
+  }
+
 
   @override
   void dispose() {
@@ -79,8 +81,9 @@ class _Signin2PageState extends State<Signin2Page>
                   fontSize: 13);
             }
             if (state is LoginSuccess){
+              Global.user = state.loginData.nombre;
               Navigator.pop(context);
-              Navigator.pushNamed(context, '/home');
+              Navigator.pushReplacementNamed(context, '/home');
             }
           },
           child: Stack(
@@ -295,7 +298,7 @@ class _Signin2PageState extends State<Signin2Page>
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: 'TSV S.R.L.',
+                                text: 'TSV S.R.L. ',
                                 style: GoogleFonts.nunito(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,

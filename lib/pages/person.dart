@@ -287,7 +287,7 @@ class _PersonState extends State<Person> {
                   margin: EdgeInsets.only(bottom: 10, top: 3),
                   child: Image.memory(
                     person['photoBytes'],
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
                     //EN CASO DE QUE NO SE PUEDA CARGAR LA IMAGEN
                     errorBuilder: (BuildContext context, Object exception,
                         StackTrace? stackTrace) {
